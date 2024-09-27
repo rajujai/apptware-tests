@@ -10,6 +10,10 @@ public class BeanFactory {
   @Autowired private ApplicationContext context;
 
   public OnDemand getOnDemandBean(SomeEnum someEnum, String someString) {
-    return context.getBean(BaseOnDemand.class, someString);
+    return switch (someEnum) {
+      case SOME_ENUM_A -> context.getBean(OnDemandA.class, someString);
+      case SOME_ENUM_B -> context.getBean(OnDemandB.class, someString);
+      default -> context.getBean(BaseOnDemand.class, someString);
+    };
   }
 }
